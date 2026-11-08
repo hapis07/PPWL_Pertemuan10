@@ -1,86 +1,77 @@
-@extends('layout.master')
+@extends('layout.auth')
 
 @section('title', 'Login')
-@section('heading', 'Login')
 
 @section('content')
-<div class="row justify-content-center">
-    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
 
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Selamat Datang</h4>
-                <p class="text-muted mb-0">
-                    Masuk untuk mengakses aplikasi Data Buku.
-                </p>
-            </div>
+    <div class="text-center mb-4">
+        <h2 class="auth-title">Login</h2>
+        <p class="text-muted">
+            Selamat Datang di Aplikasi Data Buku.
+            Silakan login untuk melanjutkan.
+        </p>
+    </div>
 
-            <div class="card-body">
-                <form method="POST" action="{{ route('login') }}">
-                    @csrf
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            Email atau password yang dimasukkan tidak sesuai.
+        </div>
+    @endif
 
-                    <div class="form-group mb-3">
-                        <label for="email" class="form-label">
-                            Alamat Email
-                        </label>
+    <form method="POST" action="{{ route('login') }}">
+        @csrf
 
-                        <input id="email"
-                               type="email"
-                               name="email"
-                               value="{{ old('email') }}"
-                               class="form-control @error('email') is-invalid @enderror"
-                               placeholder="nama@email.com"
-                               autocomplete="username"
-                               required
-                               autofocus>
+        <div class="form-group mb-4">
+            <label for="email" class="form-label">Alamat Email</label>
 
-                        @error('email')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
+            <input
+                id="email"
+                type="email"
+                class="form-control @error('email') is-invalid @enderror"
+                name="email"
+                value="{{ old('email') }}"
+                placeholder="Masukkan alamat email"
+                required
+                autofocus
+                autocomplete="username"
+            >
 
-                    <div class="form-group mb-3">
-                        <label for="password" class="form-label">
-                            Password
-                        </label>
-
-                        <input id="password"
-                               type="password"
-                               name="password"
-                               class="form-control @error('password') is-invalid @enderror"
-                               placeholder="Masukkan password"
-                               autocomplete="current-password"
-                               required>
-
-                        @error('password')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-
-                    <div class="form-check mb-4">
-                        <input type="checkbox"
-                               id="remember"
-                               name="remember"
-                               class="form-check-input"
-                               {{ old('remember') ? 'checked' : '' }}>
-
-                        <label for="remember" class="form-check-label">
-                            Ingat saya
-                        </label>
-                    </div>
-
-                    <button type="submit"
-                            class="btn btn-primary w-100">
-                        Login
-                    </button>
-                </form>
-            </div>
+            @error('email')
+                <span class="invalid-feedback">
+                    {{ $message }}
+                </span>
+            @enderror
         </div>
 
+        <div class="form-group mb-4">
+            <label for="password" class="form-label">Password</label>
+
+            <input
+                id="password"
+                type="password"
+                class="form-control @error('password') is-invalid @enderror"
+                name="password"
+                placeholder="Masukkan password"
+                required
+                autocomplete="current-password"
+            >
+
+            @error('password')
+                <span class="invalid-feedback">
+                    {{ $message }}
+                </span>
+            @enderror
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">
+            Login
+        </button>
+    </form>
+
+    <div class="text-center mt-4">
+        <small class="text-muted">
+            2026 &copy; Aplikasi Data Buku
+        </small>
     </div>
-</div>
+
 @endsection

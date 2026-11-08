@@ -162,7 +162,6 @@
                                           onsubmit="return confirm('Yakin ingin menghapus buku ini?')">
                                         @csrf
                                         @method('DELETE')
-
                                         <button type="submit"
                                                 class="btn btn-sm btn-danger">
                                             <i class="bi bi-trash"></i>

@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 class BukuController extends Controller
 {
     // READ: menampilkan daftar buku dengan pagination dan statistik.
+    public function __construct()
+    {
+    $this->middleware('auth');
+    }
+    
     public function index()
     {
         $batas = 5;
@@ -137,7 +142,7 @@ class BukuController extends Controller
         })
             ->orderByDesc('id')
             ->paginate($batas)
-            ->withQueryString();
+            ->appends($request->query());
 
         $jumlah_hasil = $data_buku->total();
         $no = $batas * ($data_buku->currentPage() - 1);

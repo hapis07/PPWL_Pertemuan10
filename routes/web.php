@@ -3,12 +3,18 @@
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\PembayaranController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
+// Authentication
 Auth::routes([
     'register' => false,
     'reset' => false,
 ]);
+
+Route::resource('users', UserController::class)
+    ->except(['show']);
 
 // Halaman utama
 Route::get('/', function () {

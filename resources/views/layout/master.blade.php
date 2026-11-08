@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -36,8 +37,10 @@
             <div class="sidebar-menu">
                 <ul class="menu">
 
+                    {{-- MENU UTAMA --}}
                     <li class="sidebar-title">Menu Utama</li>
 
+                    {{-- MENU DATA BUKU --}}
                     <li class="sidebar-item {{ request()->routeIs('buku.*') ? 'active' : '' }}">
                         <a href="{{ route('buku.index') }}"
                            class="sidebar-link">
@@ -46,6 +49,22 @@
                         </a>
                     </li>
 
+                    {{-- MENU DATA USER KHUSUS ADMIN --}}
+                    @if (auth()->check() &&
+                         auth()->user()->level === 'admin' &&
+                         \Illuminate\Support\Facades\Route::has('users.index'))
+
+                        <li class="sidebar-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                            <a href="{{ route('users.index') }}"
+                               class="sidebar-link">
+                                <i class="bi bi-people"></i>
+                                <span>Data User</span>
+                            </a>
+                        </li>
+
+                    @endif
+
+                    {{-- MENU AKUN --}}
                     @auth
                         <li class="sidebar-title">Akun</li>
 
@@ -93,6 +112,7 @@
 
         <div class="page-content">
 
+            {{-- NOTIFIKASI BERHASIL --}}
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show">
                     {{ session('success') }}
@@ -104,6 +124,7 @@
                 </div>
             @endif
 
+            {{-- NOTIFIKASI ERROR --}}
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <strong>Periksa kembali data yang dimasukkan.</strong>
@@ -116,10 +137,12 @@
                 </div>
             @endif
 
+            {{-- KONTEN HALAMAN --}}
             @yield('content')
 
         </div>
 
+        {{-- FOOTER --}}
         <footer>
             <div class="footer clearfix mb-0 text-muted">
                 <div class="float-start">
@@ -131,8 +154,10 @@
     </div>
 </div>
 
+{{-- JAVASCRIPT --}}
 <script src="{{ asset('mazer/assets/compiled/js/app.js') }}"></script>
 
 @stack('scripts')
+
 </body>
 </html>
