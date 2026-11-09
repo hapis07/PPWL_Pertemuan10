@@ -123,6 +123,7 @@
                     <tr>
                         <th>No.</th>
                         <th>Judul Buku</th>
+                        <th>Cover Buku</th>
                         <th>Penulis</th>
                         <th>Harga</th>
                         <th>Tanggal Terbit</th>
@@ -137,6 +138,18 @@
 
                             <td class="text-bold-500">
                                 {{ $buku->judul }}
+                            </td>
+                            
+                            <td>
+                                @if ($buku->cover)
+                                    <img src="{{asset('storage/' . $buku->cover)}}"
+                                        width ="80"
+                                        height="100"
+                                        style="object-fit:cover"
+                                        alt="Cover {{ $buku->judul }}">
+                                @else
+                                    <span class ="text-muted">Belum ada cover</span>
+                                @endif
                             </td>
 
                             <td>{{ $buku->penulis }}</td>
@@ -173,7 +186,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center py-4">
+                            <td colspan="7" class="text-center py-4">
                                 <i class="bi bi-inbox fs-2 d-block mb-2"></i>
                                 Belum ada data buku.
                             </td>

@@ -11,7 +11,10 @@
     </div>
 
     <div class="card-body">
-        <form action="{{ route('buku.store') }}" method="POST">
+        <form action="{{ route('buku.store') }}"
+              method="POST"
+              enctype="multipart/form-data">
+
             @csrf
 
             <div class="form-group mb-3">
@@ -74,6 +77,19 @@
                 @enderror
             </div>
 
+            <div class="form-group mb-4">
+                <label for="cover" class="form-label">Cover Buku</label>
+                <input type="file"
+                       id="cover"
+                       name="cover"
+                       class="form-control @error('cover') is-invalid @enderror"
+                       accept="image/jpeg,image/png">
+
+                @error('cover')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
             <div class="d-flex gap-2">
                 <button type="submit" class="btn btn-primary">
                     Simpan Buku
@@ -84,6 +100,7 @@
                     Kembali
                 </a>
             </div>
+
         </form>
     </div>
 </div>

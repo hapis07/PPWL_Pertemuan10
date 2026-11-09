@@ -73,14 +73,12 @@ class UserController extends Controller
             'level' => 'required|in:admin,user',
         ]);
 
-        // Melindungi akun admin yang sedang digunakan
         if ($user->id == auth()->id() && $validated['level'] !== 'admin') {
             return back()->withErrors([
                 'level' => 'Level akun admin yang sedang digunakan tidak dapat diubah.'
             ])->withInput();
         }
 
-        // Password hanya diubah jika diisi
         if (!empty($validated['password'])) {
             $validated['password'] = Hash::make($validated['password']);
         } else {
@@ -92,7 +90,6 @@ class UserController extends Controller
         return redirect()->route('users.index')
             ->with('success', 'Data user berhasil diperbarui.');
     }
-
     // Menghapus data user
     public function destroy(User $user)
     {
