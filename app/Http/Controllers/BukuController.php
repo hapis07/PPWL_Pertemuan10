@@ -11,7 +11,7 @@ class BukuController extends Controller
     // READ: menampilkan daftar buku dengan pagination dan statistik.
     public function __construct()
     {
-    $this->middleware('auth');
+        $this->middleware('auth');
     }
 
     public function index()
@@ -55,7 +55,7 @@ class BukuController extends Controller
                 'covers',
                 'public'
             );
-        }   
+        }
 
         Buku::create([
             'judul' => $request->judul,
@@ -108,15 +108,15 @@ class BukuController extends Controller
                 'cover.max' => 'Ukuran cover maksimal 2 MB.',
             ]
         );
-        if ($request->hasFile('cover')){
-            if ($buku->cover){
+        if ($request->hasFile('cover')) {
+            if ($buku->cover) {
                 storage::disk('public')->delete($buku->cover);
             }
             $coverPath = $request->file('cover')->store(
                 'covers',
                 'public'
             );
-            $data['cover'] =$coverPath;
+            $data['cover'] = $coverPath;
         } else {
             unset($data['cover']);
         }
@@ -172,5 +172,23 @@ class BukuController extends Controller
             'no',
             'cari'
         ));
+    }
+    // Menampilkan daftar buku untuk halaman SEO
+    public function listBuku()
+    {
+        $bukus = Buku::orderBy('judul', 'asc')->paginate(12);
+
+        return view('buku.list_buku', compact('bukus'));
+    }
+    // Menampilkan Gallery berdasarkan SEO buku
+    public function galbuku($title)
+    {
+        $buku = Buku::where('buku_seo', $title)->firstOrFail();
+
+        $galeris = $buku->photos()
+            ->orderBy('id', 'desc')
+            ->paginate(6);
+
+        return view('buku.detail_buku', compact('buku', 'galeris'));
     }
 }

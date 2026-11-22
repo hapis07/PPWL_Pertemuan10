@@ -3,6 +3,7 @@
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\PembayaranController;
+use App\Http\Controllers\GalleryController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -62,3 +63,15 @@ Route::get('/pembayaran', [PembayaranController::class, 'index'])
 // Dashboard setelah login
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('home');
+
+// Gallery
+Route::resource('gallery', GalleryController::class)
+    ->except(['show']);
+
+// Halaman List Buku SEO
+Route::get('/list-buku', [BukuController::class, 'listBuku'])
+    ->name('buku.list');
+
+// Halaman Detail Gallery Buku
+Route::get('/detail-buku/{title}', [BukuController::class, 'galbuku'])
+    ->name('galeri.buku');
