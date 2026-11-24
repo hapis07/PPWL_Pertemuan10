@@ -7,6 +7,7 @@ use App\Http\Controllers\GalleryController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\GoogleController;
 
 // Authentication
 Auth::routes([
@@ -75,3 +76,12 @@ Route::get('/list-buku', [BukuController::class, 'listBuku'])
 // Halaman Detail Gallery Buku
 Route::get('/detail-buku/{title}', [BukuController::class, 'galbuku'])
     ->name('galeri.buku');
+
+// Route untuk Login SSO Google
+Route::middleware('guest')->group(function () {
+    Route::get('/auth/google', [GoogleController::class, 'redirect'])
+        ->name('google.redirect');
+
+    Route::get('/auth/google/callback', [GoogleController::class, 'callback'])
+        ->name('google.callback');
+});

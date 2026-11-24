@@ -18,23 +18,26 @@
         </div>
     @endif
 
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
         <div class="form-group mb-4">
             <label for="email" class="form-label">Alamat Email</label>
 
-            <input
-                id="email"
-                type="email"
-                class="form-control @error('email') is-invalid @enderror"
-                name="email"
-                value="{{ old('email') }}"
-                placeholder="Masukkan alamat email"
-                required
-                autofocus
-                autocomplete="username"
-            >
+            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email"
+                value="{{ old('email') }}" placeholder="Masukkan alamat email" required autofocus autocomplete="username">
 
             @error('email')
                 <span class="invalid-feedback">
@@ -46,15 +49,8 @@
         <div class="form-group mb-4">
             <label for="password" class="form-label">Password</label>
 
-            <input
-                id="password"
-                type="password"
-                class="form-control @error('password') is-invalid @enderror"
-                name="password"
-                placeholder="Masukkan password"
-                required
-                autocomplete="current-password"
-            >
+            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
+                name="password" placeholder="Masukkan password" required autocomplete="current-password">
 
             @error('password')
                 <span class="invalid-feedback">
@@ -67,6 +63,18 @@
             Login
         </button>
     </form>
+
+    <div class="text-center mt-3 mb-2">
+        <span class="text-muted">Atau login menggunakan</span>
+    </div>
+
+    <a href="{{ route('google.redirect') }}"
+        class="btn btn-outline-dark w-100 d-flex align-items-center justify-content-center gap-2">
+
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" alt="Google">
+
+        Login dengan Google
+    </a>
 
     <div class="text-center mt-4">
         <small class="text-muted">
